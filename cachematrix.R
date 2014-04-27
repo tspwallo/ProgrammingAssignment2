@@ -25,16 +25,18 @@ makeCacheMatrix <- function(m = matrix()) {
 
 cacheSolve <- function(x, ...) {
     # A cached version of the solve() function
+    # The idea is that after having computed the inverse we cache the value 
+    # and use the cached value in future lookups. 
     # Args:
     #   x: A special "matrix" as a result from cacheMakeMatrix()
     # Returns:
     #   A matrix that is the inverse of 'x'
-    m <- x$getcache()
+    m <- x$getcache()    # We have it cached?
     if (!is.null(m)) {
         message("getting cached data")
         return(m)
     }
-    m <- solve(x$get())
-    x$setcache(m)
+    m <- solve(x$get())  # Solve the inverse
+    x$setcache(m)        # And cache the value
     return(m)
 }
